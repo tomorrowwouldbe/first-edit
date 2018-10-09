@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>daily-vue</title>
+	<!--<link href="http://www.xiaoniren.com.cn/images/img/logo.ico" type="image/x-icon" rel="shortcut icon" />-->
+	<link rel="shortcut icon" href="https://www.baidu.com/favicon.ico" type="image/x-icon" />
+	<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=qQVCkEZHYlb6unQDQKYqS11mw1NOKKI9"></script>
+  </head>
+  <body>
+    <div id="app"></div>
+    <!-- built files will be auto injected -->
+	<script>
+		// 设置根元素font-size
+		var infinite = function() {
+			var htmlElem = document.getElementsByTagName("html")[0];
+			// 获取页面宽度
+			var htmlWidth = htmlElem.clientWidth;
+			// 判断当前设备是否是移动端设备
+			//if (htmlWidth <= 768) {
+				// 计算font-size大小
+				//var fontSize = (10 / 375 * htmlWidth).toFixed(2);
+				// 设置html的font-size属性
+				//htmlElem.style.fontSize = fontSize + "px";
+			//}
+			// 计算font-size大小
+			var fontSize = (10 / 375 * htmlWidth).toFixed(2);
+			// 设置html的font-size属性
+			htmlElem.style.fontSize = fontSize + "px";
+		};
+		infinite();
+
+		// resize事件,监控浏览器页面的宽度是否发生改变
+		window.onresize = function () {
+			console.log('屏幕宽度发生改变：'+document.getElementsByTagName("html")[0].clientWidth)
+			infinite();
+		};
+
+	</script>
+  </body>
+</html>
