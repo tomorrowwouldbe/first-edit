@@ -12,8 +12,12 @@
 10、页面按需加载
 11、拦截器的作用：请求的统一处理
 12、keep-alive的处理
-13、登录授权，优化完成
+13、登录授权，优化完成    （见路径：router/index.js）
 14、页面刷新
 15、跳转页面{name:'',params:{}}/{path:'',query:{}}
 16、Rem的使用
 17、引用sass
+
+small-points
+1、路由replace：this.$router.replace({path:'/index',query:{}})  /  this.$router.replace('/index')   （见路径：pages/Login.vue）
+2、input框回车触发事件：@keydown.enter="enter"   （见路径：pages/Login.vue）

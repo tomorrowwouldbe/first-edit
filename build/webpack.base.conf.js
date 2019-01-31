@@ -4,7 +4,7 @@ const utils = require('./utils')
 const config = require('../config')
 const vueLoaderConfig = require('./vue-loader.conf')
 
-function resolve (dir) {
+function resolve(dir) {
   return path.join(__dirname, '..', dir)
 }
 
@@ -27,19 +27,19 @@ module.exports = {
     alias: {
       'vue$': 'vue/dist/vue.esm.js',
       '@': resolve('src'),
-	  // webpack 使用 jQuery，如果是自行下载的
-	  // 'jquery': path.resolve(__dirname, '../src/assets/libs/jquery/jquery.min'),
-	  // 如果使用NPM安装的jQuery
-	  'jquery': 'jquery',
+      // webpack 使用 jQuery，如果是自行下载的
+      // 'jquery': path.resolve(__dirname, '../src/assets/libs/jquery/jquery.min'),
+      // 如果使用NPM安装的jQuery
+      'jquery': 'jquery',
     }
   },
   // 增加一个plugins
-   plugins: [
-      new webpack.ProvidePlugin({
-          $: "jquery",
-          jQuery: "jquery"
-      })
-   ],
+  plugins: [
+    new webpack.ProvidePlugin({
+      $: "jquery",
+      jQuery: "jquery"
+    })
+  ],
   module: {
     rules: [
       {
@@ -52,10 +52,10 @@ module.exports = {
         loader: 'babel-loader',
         include: [resolve('src'), resolve('test'), resolve('node_modules/webpack-dev-server/client')]
       },
-	  {
-		  test: /\.scss$/,
-		  loaders: ['style', 'css', 'sass']
-	  },
+      {
+        test: /\.scss$/,
+        loaders: ['style', 'css', 'sass']
+      },
       {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
         loader: 'url-loader',

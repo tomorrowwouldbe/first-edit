@@ -38,87 +38,94 @@
 </template>
 
 <script>
-import qs from 'qs';
+import qs from "qs";
 export default {
-  name: 'test',
-  data () {
+  name: "test",
+  data() {
     return {
-      msg: '私たちの存在',
-	  arr:[1,2,3],
-	  value:'选项A',
-	  address:'',
-	  street:'',
-	  streetNumber:'',
-	  lat:'',
-	  lng:'',
+      msg: "私たちの存在",
+      arr: [1, 2, 3],
+      value: "选项A",
+      address: "",
+      street: "",
+      streetNumber: "",
+      lat: "",
+      lng: ""
+    };
+  },
+  props: {
+    type: {
+      type: Number,
+      default: 1
     }
   },
-  props:{
-	type:{
-		type:Number,
-		default:1
-	}
+  created() {
+    let params = {
+      uid: 247605,
+      user_token: "lushang"
+    };
+    params = qs.stringify(params);
+    this.$http.post("/api/MeasurePlan/getUserRestaurant", params).then(res => {
+      console.log(res);
+    });
+
+    //判断手机浏览器是否支持定位
+    if (navigator.geolocation) {
+      var geolocation = new BMap.Geolocation(); //创建定位实例
+      geolocation.getCurrentPosition(this.getLocation, {
+        enableHighAccuracy: true
+      }); //enableHighAccuracy 要求浏览器获取最佳结果
+    } else {
+      map.addControl(new BMap.GeolocationControl()); //添加定位控件 支持定位
+    }
   },
-  created(){
-	let params={
-		uid: 247605,
-		user_token:'lushang'
-	}
-	params=qs.stringify(params)
-	this.$http.post('/api/MeasurePlan/getUserRestaurant',params).then((res)=>{
-		console.log(res)
-	})
-	
-	//判断手机浏览器是否支持定位
-	if(navigator.geolocation) {
-		var geolocation = new BMap.Geolocation(); //创建定位实例
-		geolocation.getCurrentPosition(this.getLocation, {
-			enableHighAccuracy: true
-		}); //enableHighAccuracy 要求浏览器获取最佳结果
-	} else {
-		map.addControl(new BMap.GeolocationControl()); //添加定位控件 支持定位
-	}
+  methods: {
+    radiocCheck(idx) {
+      console.log(idx);
+      this.$emit("checkedKey", idx);
+    },
+    getLocation() {
+      var self = this;
+      var geolocation = new BMap.Geolocation();
+      geolocation.getCurrentPosition(function(r) {
+        console.log(r);
+        self.lng = r.point.lng;
+        self.lat = r.point.lat;
+        if (r.point.lng && r.point.lat) {
+          var myGeo = new BMap.Geocoder();
+          myGeo.getLocation(new BMap.Point(r.point.lng, r.point.lat), function(
+            result
+          ) {
+            console.log(result);
+            self.address =
+              result.addressComponents.province +
+              result.addressComponents.city +
+              result.addressComponents.district +
+              result.addressComponents.street +
+              result.addressComponents.streetNumber;
+            self.street = result.addressComponents.street;
+            self.streetNumber = result.addressComponents.streetNumber;
+          });
+        }
+      });
+    }
   },
-  methods:{
-	radiocCheck(idx){
-		console.log(idx)
-		this.$emit('checkedKey',idx)
-	},
-	getLocation(){
-		var self = this; 
-		var geolocation = new BMap.Geolocation(); 
-		geolocation.getCurrentPosition(function(r){ 
-			console.log(r)
-			self.lng=r.point.lng
-			self.lat=r.point.lat
-			if(r.point.lng&&r.point.lat){
-				var myGeo = new BMap.Geocoder();
-				myGeo.getLocation(new BMap.Point(r.point.lng, r.point.lat), function(result){
-					console.log(result)
-					self.address=result.addressComponents.province+result.addressComponents.city+result.addressComponents.district+result.addressComponents.street+result.addressComponents.streetNumber
-					self.street=result.addressComponents.street
-					self.streetNumber=result.addressComponents.streetNumber
-				})
-			}
-		});
-	}
-  },
-  watch:{
-	value(newVal,oldVal){
-		console.log(newVal,oldVal)
-	}
+  watch: {
+    value(newVal, oldVal) {
+      console.log(newVal, oldVal);
+    }
   }
-}
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.radio-group{
-	text-align:left;
+.radio-group {
+  text-align: left;
 }
-.test-p{
-	text-align:left;
-	height:30px;
-	line-height:30px;
+.test-p {
+  text-align: left;
+  height: 30px;
+  line-height: 30px;
 }
 </style>
